@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  --color-warm-cream: #fdfcf8;
+  --color-dark-ink: #2d2a26;
+  --color-muted-olive: #8a7b6b;
+  --color-soft-rose: #d4c1b9;
+  --color-accent-peach: #e8a598;
+  --color-accent-peach-hover: #d69588;
+  
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Playfair Display", serif;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+:root {
+  --bg: var(--color-warm-cream);
+  --ink: var(--color-dark-ink);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+}
+
+.btn-primary {
+  @apply bg-accent-peach text-white px-6 py-3 rounded-full font-medium transition-all hover:bg-accent-peach-hover hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0;
+}
+
+.btn-secondary {
+  @apply bg-white text-dark-ink border border-gray-200 px-6 py-3 rounded-full font-medium transition-all hover:border-dark-ink hover:bg-gray-50;
+}
+
+.badge {
+  @apply px-3 py-1 bg-white/60 border border-gray-200 rounded-full text-xs font-medium text-muted-olive backdrop-blur-sm;
+}

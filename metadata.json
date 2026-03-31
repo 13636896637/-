@@ -1,0 +1,7 @@
+{
+  "name": "恋AI解忧——AI智能恋爱情感咨询",
+  "description": "基于多模态情感分析技术的AI恋爱情感咨询平台，提供聊天记录诊断、心理归因推测及高情商话术建议。",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
