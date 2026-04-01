@@ -40,7 +40,7 @@ export default function PhotoSphere() {
     const wrapper = wrapperRef.current;
     const tagCloud = cloudRef.current;
     const MAX_TAGS = 36;
-    let radius = Math.min(wrapper.offsetWidth, wrapper.offsetHeight, 800) / 2.2;
+    let radius = Math.min(wrapper.offsetWidth, wrapper.offsetHeight, 1000) / 2;
 
     let angleX = 0, angleY = 0;
     let velX = 0, velY = 0.05;
@@ -70,7 +70,7 @@ export default function PhotoSphere() {
 
         const imgEl = document.createElement("img");
         imgEl.src = imageUrl;
-        imgEl.className = "inline-block w-24 h-24 md:w-32 md:h-32 object-cover rounded-full shadow-lg border-2 border-white/20 cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-accent-peach/50 hover:border-accent-peach";
+        imgEl.className = "inline-block w-32 h-32 md:w-40 md:h-40 object-cover rounded-full shadow-lg border-2 border-white/20 cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-accent-peach/50 hover:border-accent-peach";
         imgEl.style.transform = "translate(-50%, -50%)";
         imgEl.style.backfaceVisibility = "visible";
         imgEl.draggable = false;
@@ -306,7 +306,7 @@ export default function PhotoSphere() {
     window.addEventListener("touchend", handleTouchEnd);
 
     const handleResize = () => {
-      radius = Math.min(wrapper.offsetWidth, wrapper.offsetHeight, 800) / 2.2;
+      radius = Math.min(wrapper.offsetWidth, wrapper.offsetHeight, 1000) / 2;
       createTags();
     };
     window.addEventListener("resize", handleResize);

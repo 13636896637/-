@@ -1,11 +1,53 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Heart, Users, BookOpen, MessageCircle, Sparkles } from 'lucide-react';
-import Home from './pages/Home';
-import Matchmaking from './pages/Matchmaking';
-import Learning from './pages/Learning';
-import Community from './pages/Community';
-import Diagnosis from './pages/Diagnosis';
+import { Heart, Users, BookOpen, MessageCircle, Sparkles, Loader2 } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+
+// Lazy load pages for performance optimization
+const Home = React.lazy(() => import('./pages/Home'));
+const Matchmaking = React.lazy(() => import('./pages/Matchmaking'));
+const Learning = React.lazy(() => import('./pages/Learning'));
+const Community = React.lazy(() => import('./pages/Community'));
+const Diagnosis = React.lazy(() => import('./pages/Diagnosis'));
+
+const PageLoader = () => (
+  <div className="w-full h-[60vh] flex flex-col items-center justify-center text-muted-olive">
+    <Loader2 className="w-8 h-8 animate-spin mb-4 text-accent-peach" />
+    <p className="text-sm font-medium animate-pulse">加载中...</p>
+  </div>
+);
+
+const PageWrapper = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -15 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="w-full h-full"
+    >
+      <Suspense fallback={<PageLoader />}>
+        {children}
+      </Suspense>
+    </motion.div>
+  );
+};
+
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
+        <Route path="/matchmaking" element={<PageWrapper><Matchmaking /></PageWrapper>} />
+        <Route path="/learning" element={<PageWrapper><Learning /></PageWrapper>} />
+        <Route path="/community" element={<PageWrapper><Community /></PageWrapper>} />
+        <Route path="/diagnosis" element={<PageWrapper><Diagnosis /></PageWrapper>} />
+      </Routes>
+    </AnimatePresence>
+  );
+};
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
@@ -40,10 +82,14 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         }`}
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <h1 className={`text-2xl font-bold font-serif transition-colors duration-300 flex items-center gap-2 ${isDarkHero ? 'text-white' : 'text-dark-ink'}`}>
+          <motion.h1 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className={`text-2xl font-bold font-serif transition-colors duration-300 flex items-center gap-2 ${isDarkHero ? 'text-white' : 'text-dark-ink'}`}
+          >
             <Heart className={`w-6 h-6 ${isDarkHero ? 'text-accent-peach' : 'text-accent-peach'}`} fill="currentColor" />
             恋AI解忧
-          </h1>
+          </motion.h1>
           <nav className={`flex space-x-1 backdrop-blur-md rounded-full p-1 border transition-colors duration-300 ${
             isDarkHero 
               ? 'bg-white/10 border-white/20' 
@@ -55,16 +101,25 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 <Link 
                   key={item.path} 
                   to={item.path} 
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-300 ${
-                    isActive 
-                      ? 'bg-white text-dark-ink shadow-sm' 
-                      : isDarkHero 
-                        ? 'hover:bg-white/20 text-white/90 hover:text-white' 
-                        : 'hover:bg-white/50 text-dark-ink/80 hover:text-dark-ink'
-                  }`}
+                  className="relative flex items-center space-x-2 px-4 py-2 rounded-full transition-colors duration-300"
                 >
-                  <item.icon className="w-4 h-4" />
-                  <span className="text-sm font-medium">{item.name}</span>
+                  {isActive && (
+                    <motion.div
+                      layoutId="nav-pill"
+                      className="absolute inset-0 bg-white rounded-full shadow-sm"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                  <span className={`relative z-10 flex items-center space-x-2 ${
+                    isActive 
+                      ? 'text-dark-ink' 
+                      : isDarkHero 
+                        ? 'text-white/90 hover:text-white' 
+                        : 'text-dark-ink/80 hover:text-dark-ink'
+                  }`}>
+                    <item.icon className="w-4 h-4" />
+                    <span className="text-sm font-medium">{item.name}</span>
+                  </span>
                 </Link>
               );
             })}
@@ -85,13 +140,7 @@ export default function App() {
   return (
     <Router>
       <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/matchmaking" element={<Matchmaking />} />
-          <Route path="/learning" element={<Learning />} />
-          <Route path="/community" element={<Community />} />
-          <Route path="/diagnosis" element={<Diagnosis />} />
-        </Routes>
+        <AnimatedRoutes />
       </Layout>
     </Router>
   );

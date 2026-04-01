@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { PlayCircle, Clock, BookOpen, ChevronRight, Star, X, CheckCircle2, Users } from 'lucide-react';
+import { PlayCircle, Clock, BookOpen, ChevronRight, Star, X, Users } from 'lucide-react';
 
 const CATEGORIES = ["全部", "沟通技巧", "心理学解析", "长期关系维护", "形象提升", "脱单指南"];
 
@@ -26,7 +26,7 @@ export default function Learning() {
   const gridCourses = filteredCourses.filter(c => !c.featured || activeCategory !== "全部");
 
   return (
-    <div className="space-y-12 relative">
+    <div className="space-y-12 relative pb-20">
       {/* Header */}
       <div className="space-y-4">
         <h2 className="text-4xl font-serif text-dark-ink">恋爱技巧课堂</h2>
@@ -34,12 +34,12 @@ export default function Learning() {
       </div>
 
       {/* Categories */}
-      <div className="flex overflow-x-auto pb-2 hide-scrollbar space-x-3">
-        {CATEGORIES.map((cat, i) => (
+      <div className="flex overflow-x-auto pb-4 hide-scrollbar space-x-3 -mx-4 px-4 md:mx-0 md:px-0">
+        {CATEGORIES.map((cat) => (
           <button 
             key={cat}
             onClick={() => setActiveCategory(cat)}
-            className={`whitespace-nowrap px-6 py-2.5 rounded-full text-sm font-medium transition-all shadow-sm ${activeCategory === cat ? 'bg-dark-ink text-white shadow-md' : 'bg-white text-dark-ink border border-gray-200 hover:border-dark-ink/50 hover:bg-gray-50'}`}
+            className={`whitespace-nowrap px-6 py-2.5 rounded-full text-sm font-medium transition-all shadow-sm flex-shrink-0 ${activeCategory === cat ? 'bg-dark-ink text-white shadow-md' : 'bg-white text-dark-ink border border-gray-200 hover:border-dark-ink/50 hover:bg-gray-50'}`}
           >
             {cat}
           </button>
@@ -51,28 +51,25 @@ export default function Learning() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="relative rounded-[2.5rem] overflow-hidden bg-dark-ink text-white shadow-xl cursor-pointer group"
+          className="relative rounded-3xl overflow-hidden bg-dark-ink text-white shadow-xl cursor-pointer group min-h-[400px] flex items-end"
           onClick={() => setSelectedCourse(featuredCourse)}
         >
           <div className="absolute inset-0">
-            <img src={featuredCourse.image} alt="Featured" className="w-full h-full object-cover opacity-40 transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
-            <div className="absolute inset-0 bg-gradient-to-r from-dark-ink via-dark-ink/80 to-transparent"></div>
+            <img src={featuredCourse.image} alt="Featured" className="w-full h-full object-cover opacity-50 transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
+            <div className="absolute inset-0 bg-gradient-to-t from-dark-ink via-dark-ink/60 to-transparent"></div>
           </div>
           
-          <div className="relative p-8 md:p-16 max-w-2xl space-y-6">
-            <div className="inline-flex items-center space-x-2 bg-accent-peach text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
+          <div className="relative p-6 md:p-12 w-full max-w-3xl space-y-4 md:space-y-6">
+            <div className="inline-flex items-center space-x-2 bg-accent-peach text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
               <Star className="w-3.5 h-3.5 fill-current" /> <span>本周主推课程</span>
             </div>
-            <h3 className="text-3xl md:text-5xl font-serif leading-tight drop-shadow-md">{featuredCourse.title}</h3>
-            <p className="text-white/80 line-clamp-2 text-lg">{featuredCourse.description}</p>
-            <div className="flex flex-wrap items-center gap-4 text-sm text-white/90">
-              <span className="flex items-center bg-white/10 px-3 py-1.5 rounded-lg backdrop-blur-sm"><PlayCircle className="w-4 h-4 mr-1.5" /> {featuredCourse.type === 'video' ? '视频课程' : '深度长文'}</span>
-              <span className="flex items-center bg-white/10 px-3 py-1.5 rounded-lg backdrop-blur-sm"><Clock className="w-4 h-4 mr-1.5" /> {featuredCourse.duration}</span>
-              <span className="bg-white/10 px-3 py-1.5 rounded-lg backdrop-blur-sm">{featuredCourse.author}</span>
+            <h3 className="text-2xl md:text-4xl lg:text-5xl font-serif leading-tight drop-shadow-md">{featuredCourse.title}</h3>
+            <p className="text-white/80 line-clamp-2 text-sm md:text-base lg:text-lg max-w-2xl">{featuredCourse.description}</p>
+            <div className="flex flex-wrap items-center gap-3 text-xs md:text-sm text-white/90 pt-2">
+              <span className="flex items-center bg-white/20 px-3 py-1.5 rounded-lg backdrop-blur-md"><PlayCircle className="w-4 h-4 mr-1.5" /> {featuredCourse.type === 'video' ? '视频课程' : '深度长文'}</span>
+              <span className="flex items-center bg-white/20 px-3 py-1.5 rounded-lg backdrop-blur-md"><Clock className="w-4 h-4 mr-1.5" /> {featuredCourse.duration}</span>
+              <span className="bg-white/20 px-3 py-1.5 rounded-lg backdrop-blur-md">{featuredCourse.author}</span>
             </div>
-            <button className="bg-white text-dark-ink px-8 py-4 rounded-xl font-bold mt-4 flex items-center hover:bg-gray-100 transition-colors shadow-lg">
-              立即学习 <ChevronRight className="w-5 h-5 ml-1" />
-            </button>
           </div>
         </motion.div>
       )}
@@ -85,39 +82,39 @@ export default function Learning() {
         </div>
         
         {gridCourses.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {gridCourses.map((course, i) => (
               <motion.div 
                 key={course.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: i * 0.05 }}
                 onClick={() => setSelectedCourse(course)}
-                className="group cursor-pointer flex flex-col h-full bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300"
+                className="group cursor-pointer flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300"
               >
-                <div className="relative aspect-[4/3] overflow-hidden flex-shrink-0">
+                <div className="relative aspect-video overflow-hidden flex-shrink-0">
                   <img src={course.image} alt={course.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
                   <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
-                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md p-2.5 rounded-full shadow-lg">
-                    {course.type === 'video' ? <PlayCircle className="w-5 h-5 text-accent-peach" /> : <BookOpen className="w-5 h-5 text-muted-olive" />}
+                  <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md p-2 rounded-full shadow-sm">
+                    {course.type === 'video' ? <PlayCircle className="w-4 h-4 text-accent-peach" /> : <BookOpen className="w-4 h-4 text-muted-olive" />}
                   </div>
-                  <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md text-white text-xs font-medium px-2.5 py-1.5 rounded-lg shadow-lg">
+                  <div className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md text-white text-xs font-medium px-2 py-1 rounded-md shadow-sm">
                     {course.duration}
                   </div>
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md text-dark-ink text-xs font-bold px-2.5 py-1.5 rounded-lg shadow-lg">
+                  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-md text-dark-ink text-xs font-bold px-2 py-1 rounded-md shadow-sm">
                     {course.category}
                   </div>
                 </div>
-                <div className="p-6 flex flex-col flex-grow justify-between space-y-4">
+                <div className="p-5 flex flex-col flex-grow justify-between space-y-4">
                   <div>
-                    <h4 className="font-bold text-xl text-dark-ink leading-snug group-hover:text-accent-peach transition-colors line-clamp-2 mb-2">
+                    <h4 className="font-bold text-lg text-dark-ink leading-snug group-hover:text-accent-peach transition-colors line-clamp-2 mb-2">
                       {course.title}
                     </h4>
                     <p className="text-sm text-muted-olive line-clamp-2">{course.description}</p>
                   </div>
-                  <div className="flex items-center justify-between pt-4 border-t border-gray-50">
-                    <span className="text-sm font-medium text-dark-ink">{course.author}</span>
-                    <div className="flex items-center text-xs text-muted-olive">
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-50 mt-auto">
+                    <span className="text-sm font-medium text-dark-ink truncate pr-2">{course.author}</span>
+                    <div className="flex items-center text-xs text-muted-olive flex-shrink-0">
                       <Users className="w-3.5 h-3.5 mr-1" /> {(course.students / 1000).toFixed(1)}k
                     </div>
                   </div>
@@ -137,7 +134,7 @@ export default function Learning() {
       {/* Course Detail Modal */}
       <AnimatePresence>
         {selectedCourse && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -149,7 +146,7 @@ export default function Learning() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-5xl bg-white rounded-[2.5rem] overflow-hidden shadow-2xl z-10 flex flex-col md:flex-row max-h-[90vh]"
+              className="relative w-full max-w-4xl bg-white rounded-3xl overflow-hidden shadow-2xl z-10 flex flex-col md:flex-row max-h-[90vh]"
             >
               <button 
                 onClick={() => setSelectedCourse(null)}
@@ -158,67 +155,71 @@ export default function Learning() {
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="w-full md:w-1/2 h-64 md:h-auto relative">
+              <div className="w-full md:w-2/5 h-48 md:h-auto relative flex-shrink-0">
                 <img src={selectedCourse.image} alt={selectedCourse.title} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent md:bg-gradient-to-r md:from-transparent md:to-black/50"></div>
                 
-                <div className="absolute top-6 left-6 bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-lg text-white text-sm font-medium flex items-center shadow-lg border border-white/20">
+                <div className="absolute top-4 left-4 bg-white/20 backdrop-blur-md px-3 py-1 rounded-lg text-white text-xs font-medium flex items-center shadow-sm border border-white/20">
                   {selectedCourse.category}
                 </div>
 
-                <div className="absolute bottom-6 left-6 right-6 text-white">
-                  <h2 className="text-3xl md:text-4xl font-serif font-bold leading-tight drop-shadow-md">{selectedCourse.title}</h2>
-                  <div className="flex flex-wrap items-center gap-4 mt-4 text-sm opacity-90">
-                    <span className="flex items-center"><PlayCircle className="w-4 h-4 mr-1" /> {selectedCourse.type === 'video' ? '视频课程' : '深度长文'}</span>
-                    <span className="flex items-center"><Clock className="w-4 h-4 mr-1" /> {selectedCourse.duration}</span>
-                  </div>
+                <div className="absolute bottom-4 left-4 right-4 text-white md:hidden">
+                  <h2 className="text-xl font-serif font-bold leading-tight drop-shadow-md line-clamp-2">{selectedCourse.title}</h2>
                 </div>
               </div>
 
-              <div className="w-full md:w-1/2 p-8 md:p-10 overflow-y-auto flex flex-col">
-                <div className="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">
+              <div className="w-full md:w-3/5 p-6 md:p-8 overflow-y-auto flex flex-col">
+                <div className="hidden md:block mb-6">
+                  <h2 className="text-2xl lg:text-3xl font-serif font-bold leading-tight text-dark-ink mb-3">{selectedCourse.title}</h2>
+                  <div className="flex flex-wrap items-center gap-3 text-sm text-muted-olive">
+                    <span className="flex items-center bg-gray-100 px-2.5 py-1 rounded-md"><PlayCircle className="w-4 h-4 mr-1.5" /> {selectedCourse.type === 'video' ? '视频课程' : '深度长文'}</span>
+                    <span className="flex items-center bg-gray-100 px-2.5 py-1 rounded-md"><Clock className="w-4 h-4 mr-1.5" /> {selectedCourse.duration}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between mb-6 pb-6 border-b border-gray-100">
                   <div className="flex items-center space-x-3">
-                    <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-xl font-serif font-bold text-dark-ink">
+                    <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-lg font-serif font-bold text-dark-ink flex-shrink-0">
                       {selectedCourse.author.charAt(0)}
                     </div>
                     <div>
-                      <p className="font-bold text-dark-ink">{selectedCourse.author}</p>
+                      <p className="font-bold text-dark-ink text-sm">{selectedCourse.author}</p>
                       <p className="text-xs text-muted-olive">课程导师</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="flex items-center text-accent-peach font-bold text-lg justify-end">
+                    <div className="flex items-center text-accent-peach font-bold text-base justify-end">
                       <Star className="w-4 h-4 mr-1 fill-current" /> {selectedCourse.rating}
                     </div>
                     <p className="text-xs text-muted-olive">{selectedCourse.students.toLocaleString()} 人已学习</p>
                   </div>
                 </div>
 
-                <div className="space-y-8 flex-grow">
+                <div className="space-y-6 flex-grow">
                   <div>
-                    <h3 className="text-xl font-bold text-dark-ink mb-3">课程简介</h3>
-                    <p className="text-dark-ink/80 leading-relaxed bg-gray-50 p-5 rounded-2xl border border-gray-100">
+                    <h3 className="text-lg font-bold text-dark-ink mb-2">课程简介</h3>
+                    <p className="text-sm text-dark-ink/80 leading-relaxed bg-gray-50 p-4 rounded-xl border border-gray-100">
                       {selectedCourse.description}
                     </p>
                   </div>
 
                   <div>
-                    <h3 className="text-xl font-bold text-dark-ink mb-4">课程大纲</h3>
-                    <ul className="space-y-3">
+                    <h3 className="text-lg font-bold text-dark-ink mb-3">课程大纲</h3>
+                    <ul className="space-y-2">
                       {selectedCourse.chapters.map((chapter: string, index: number) => (
-                        <li key={index} className="flex items-start p-3 hover:bg-gray-50 rounded-xl transition-colors">
-                          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-dark-ink/5 text-dark-ink flex items-center justify-center text-xs font-bold mr-3 mt-0.5">
+                        <li key={index} className="flex items-start p-2.5 hover:bg-gray-50 rounded-lg transition-colors">
+                          <span className="flex-shrink-0 w-5 h-5 rounded-full bg-dark-ink/5 text-dark-ink flex items-center justify-center text-[10px] font-bold mr-3 mt-0.5">
                             {index + 1}
                           </span>
-                          <span className="text-dark-ink/90 font-medium">{chapter}</span>
+                          <span className="text-sm text-dark-ink/90 font-medium">{chapter}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 </div>
 
-                <div className="mt-10 pt-6 border-t border-gray-100">
-                  <button className="w-full bg-dark-ink text-white py-4 rounded-2xl font-bold text-lg hover:bg-dark-ink/90 transition-all shadow-lg flex items-center justify-center">
+                <div className="mt-8 pt-6 border-t border-gray-100">
+                  <button className="w-full bg-dark-ink text-white py-3.5 rounded-xl font-bold text-base hover:bg-dark-ink/90 transition-all shadow-md flex items-center justify-center">
                     <PlayCircle className="w-5 h-5 mr-2" /> 开始学习
                   </button>
                 </div>

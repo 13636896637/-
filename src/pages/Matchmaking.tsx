@@ -31,7 +31,7 @@ export default function Matchmaking() {
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-peach/20 rounded-full mix-blend-screen filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
         </div>
         
-        <div className="relative z-10 w-full flex-grow flex flex-col items-center justify-center pt-8">
+        <div className="z-10 w-full flex-grow flex flex-col items-center justify-center pt-8">
           <div className="text-center space-y-4 mb-4 pointer-events-none relative z-20">
             <h1 className="text-4xl md:text-6xl font-serif text-white font-bold tracking-wider drop-shadow-lg">
               遇见 <span className="text-accent-peach italic">心动</span>
@@ -55,9 +55,9 @@ export default function Matchmaking() {
         </motion.div>
       </section>
 
-      <div className="relative">
+      <div className="relative bg-gradient-to-b from-dark-ink via-dark-ink/80 to-transparent pb-20">
         {/* Smooth Gradient Transition */}
-        <div className="absolute top-0 left-0 right-0 h-80 bg-gradient-to-b from-dark-ink to-transparent pointer-events-none -mt-1 z-0"></div>
+        <div className="absolute top-0 left-0 right-0 h-[40rem] bg-gradient-to-b from-dark-ink via-dark-ink/50 to-transparent pointer-events-none -mt-1 z-0"></div>
 
         <div id="explore-matches" className="p-4 md:p-8 max-w-7xl mx-auto space-y-8 relative z-10 pt-12 md:pt-16">
           {/* Header & Search */}
